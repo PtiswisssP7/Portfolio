@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio de Yoru</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #ece9e6, #ffffff);
+      color: #333;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeInDown 1s ease;
+    }
+    header h1 {
+      font-size: 3.2rem;
+      color: #111;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+      letter-spacing: 1px;
+    }
+    header p {
+      font-size: 1.4rem;
+      color: #444;
+      margin-top: 10px;
+    }
+    section.presentation {
+      max-width: 850px;
+      margin: 0 auto 60px;
+      text-align: center;
+      font-size: 1.15rem;
+      animation: fadeInUp 1.2s ease;
+      background: rgba(255,255,255,0.85);
+      padding: 35px;
+      border-radius: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+      animation: fadeIn 1.5s ease;
+    }
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: transform 0.5s ease, box-shadow 0.5s ease, filter 0.5s;
+      filter: grayscale(30%) contrast(1.1);
+    }
+    .gallery img:hover {
+      transform: scale(1.1) rotate(2deg);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+      filter: grayscale(0%) contrast(1.3);
+    }
+    footer {
+      text-align: center;
+      margin-top: 70px;
+      font-size: 0.9rem;
+      color: #999;
+      animation: fadeIn 2s ease;
+    }
+    .btn-group {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .contact-btn, .artstation-btn {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 40px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform 0.3s ease, background 0.3s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+    }
+    .contact-btn:hover, .artstation-btn:hover {
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+      transform: scale(1.08);
+    }
+    .scroll-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #2575fc;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    .scroll-top.show {
+      display: flex;
+    }
+    .quote {
+      font-style: italic;
+      text-align: center;
+      margin: 40px auto;
+      font-size: 1.2rem;
+      color: #555;
+      animation: fadeIn 2s ease;
+    }
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #111;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      z-index: 1000;
+    }
+    .dark-mode {
+      background: #1e1e1e;
+      color: #eee;
+    }
+    .dark-mode header h1,
+    .dark-mode header p,
+    .dark-mode .presentation,
+    .dark-mode footer {
+      color: #eee;
+    }
+    .dark-mode .presentation {
+      background: rgba(30,30,30,0.85);
+    }
+    .dark-mode .gallery img {
+      filter: grayscale(20%) brightness(1.1);
+    }
+    .progress-bar {
+      height: 20px;
+      background: #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+    .progress-bar span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+    }
+    .skills, .testimonial, .timeline, .newsletter, .faq {
+      max-width: 800px;
+      margin: 50px auto;
+      animation: fadeInUp 1.5s ease;
+    }
+    .skills h2, .testimonial, .timeline h3, .newsletter h3, .faq h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .testimonial {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 20px;
+      border-radius: 20px;
+      text-align: center;
+      font-style: italic;
+    }
+    .timeline {
+      border-left: 4px solid #2575fc;
+      padding-left: 20px;
+    }
+    .timeline div {
+      margin-bottom: 20px;
+    }
+    .timeline h4 {
+      margin: 0;
+      color: #2575fc;
+    }
+    .social-links {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .social-links a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #2575fc;
+      font-size: 1.2rem;
+    }
+    .faq p {
+      margin: 10px 0;
+    }
+    .splash {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #fff;
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash">Bienvenue dans l'univers de Yoru...</div>
+  <button class="theme-toggle" onclick="toggleTheme()">🎨 Mode sombre</button>
+  <header>
+    <h1>Portfolio de Yoru</h1>
+    <p>Artiste débutant en dessin – Passion, imagination, progression</p>
+  </header>
+
+  <section class="presentation">
+    <p>
+      Bonjour ! Je m'appelle <strong>Yoru</strong>, je suis un artiste autodidacte qui débute dans le monde du dessin.
+      Depuis quelque temps, je me découvre une véritable passion pour l'art visuel. Chaque jour, je m'efforce
+      d'améliorer mes techniques, et surtout, de laisser parler mon imagination.
+      <br><br>
+      Mon but ? <em>Faire ressentir une émotion à travers chaque trait.</em>
+    </p>
+    <div class="btn-group">
+      <button class="contact-btn" onclick="contactArtist()">Me contacter</button>
+      <a class="artstation-btn" href="https://www.artstation.com/y0ru" target="_blank">Voir mon ArtStation</a>
+    </div>
+  </section>
+
+  <div class="quote">« L'art lave notre âme de la poussière du quotidien. » – Pablo Picasso</div>
+
+  <section class="skills">
+    <h2>Compétences</h2>
+    <div>Couleurs digitales :
+      <div class="progress-bar"><span style="width: 60%"></span></div>
+    </div>
+    <div>Perspective :
+      <div class="progress-bar"><span style="width: 45%"></span></div>
+    </div>
+    <div>Portraits :
+      <div class="progress-bar"><span style="width: 30%"></span></div>
+    </div>
+  </section>
+
+  <section class="testimonial">
+    "Yoru parvient à transmettre une grande sensibilité dans ses dessins. Un artiste à suivre !" – Un fan anonyme
+  </section>
+
+  <section class="timeline">
+    <h3>Parcours</h3>
+    <div>
+      <h4>2019</h4>
+      <p>Découverte du dessin</p>
+    </div>
+    <div>
+      <h4>2023</h4>
+      <p>Début du digitales painting</p>
+    </div>
+    <div>
+      <h4>2025</h4>
+      <p>Ouverture du Portfolio et publication sur ArtStation</p>
+    </div>
+  </section>
+
+  <section class="gallery">
+    <img src="https://via.placeholder.com/400x300?text=Dessin+1" alt="Dessin 1">
+    <img src="https://via.placeholder.com/400x300?text=Dessin+2" alt="Dessin 2">
+    <img src="https://via.placeholder.com/400x300?text=Dessin+3" alt="Dessin 3">
+    <img src="https://via.placeholder.com/400x300?text=Dessin+4" alt="Dessin 4">
+  </section>
+
+  <div class="newsletter">
+    <h3>Recevoir les nouveautés</h3>
+    <input type="email" placeholder="Votre email">
+    <button onclick="subscribe()">S'inscrire</button>
+  </div>
+
+  <div class="faq">
+    <h3>FAQ</h3>
+    <p><strong>Acceptes-tu les commandes ?</strong><br>Oui, vous pouvez me contacter pour discuter de votre projet !</p>
+    <p><strong>Quels outils utilises-tu ?</strong><br>Principalement clipstudiopaint et une tablette graphique wacom cintiq pro 16.</p>
+    <p><strong>Proposes-tu des tutoriels ?</strong><br>Pas encore, mais peut j'y réflechirais !</p>
+  </div>
+
+  </div>
+
+  <footer>
+    &copy; 2025 Codé par Ptitswiss (alias Thomas) - Tous droits réservés
+  </footer>
+
+  <button class="scroll-top" id="scrollTopBtn" title="Retour en haut">↑</button>
+
+  <script>
+    function contactArtist() {
+      alert("Merci de votre intérêt ! Envoyez-moi un message à : artiste@email.com");
+    }
+
+    function subscribe() {
+      alert("Merci pour votre inscription !");
+    }
+
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+    window.onscroll = function() {
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        scrollTopBtn.classList.add("show");
+      } else {
+        scrollTopBtn.classList.remove("show");
+      }
+    };
+
+    scrollTopBtn.addEventListener("click", function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    // Splash screen
+    window.addEventListener("load", function() {
+      const splash = document.getElementById("splash");
+      splash.style.opacity = 1;
+      setTimeout(() => {
+        splash.style.transition = "opacity 0.6s ease";
+        splash.style.opacity = 0;
+        setTimeout(() => splash.style.display = "none", 600);
+      }, 1500);
+    });
+
+    // Mode sombre automatique selon l'heure
+    const hour = new Date().getHours();
+    if (hour >= 20 || hour < 6) {
+      document.body.classList.add('dark-mode');
+    }
+  </script>
+</body>
+</html>
